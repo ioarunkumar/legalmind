@@ -26,7 +26,53 @@ document.querySelectorAll(".nav,.action").forEach(btn=>{
 // =======================
 // FILE UPLOAD
 // =======================
-document.getElementById("fileInput").addEventListener("change",async e=>{
+document.getElementById("fileInput").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  document.getElementById("uploadStatus").innerText = "Uploading to AI server...";
+
+  // ============================
+  // SEND FILE TO N8N WEBHOOK
+  // ============================
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    await fetch(
+      "https://ashish98745.app.n8n.cloud/webhook-test/ingest-legal",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    console.log("File sent to n8n webhook successfully");
+  } catch (err) {
+    console.error("Webhook upload failed:", err);
+  }
+
+  // ============================
+  // LOCAL CLAUSE PARSING (existing logic)
+  // ============================
+  let text = "";
+
+  if (file.type === "text/plain") {
+    text = await file.text();
+  } else if (file.type === "application/pdf") {
+    text = await extractPDF(file);
+  }
+
+  clauses = parseClauses(text);
+  localStorage.setItem("clauses", JSON.stringify(clauses));
+
+  document.getElementById("uploadStatus").innerText =
+    `Parsed ${clauses.length} clauses & sent to AI workflow`;
+
+  document.getElementById("activity").innerText =
+    "Document uploaded & processed via n8n.";
+});
+
 const file=e.target.files[0];
 if(!file) return;
 
