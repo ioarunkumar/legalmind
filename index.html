@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LegalMind</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- pdf.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">⚖ LegalMind</div>
+
+    <button class="nav" data-view="dashboard">Dashboard</button>
+    <button class="nav" data-view="upload">Upload Document</button>
+    <button class="nav" data-view="qa">Ask Question</button>
+    <button class="nav" data-view="letter">Draft Letter</button>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h2>Welcome to <span>LegalMind</span></h2>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="view active">
+
+      <div class="stats">
+        <div class="card stat"><h1 id="docCount">0</h1><p>Documents</p></div>
+        <div class="card stat"><h1 id="queryCount">0</h1><p>Queries</p></div>
+        <div class="card stat"><h1 id="letterCount">0</h1><p>Letters Generated</p></div>
+      </div>
+
+      <h3>Quick Actions</h3>
+
+      <div class="quick">
+        <div class="card action" data-view="upload">Upload Document</div>
+        <div class="card action" data-view="qa">Ask a Question</div>
+        <div class="card action" data-view="letter">Draft a Letter</div>
+      </div>
+
+      <h3>Recent Activity</h3>
+      <div class="card" id="activity">No recent activity.</div>
+    </section>
+
+    <!-- UPLOAD -->
+    <section id="upload" class="view">
+      <h3>Upload Legal Document</h3>
+      <input type="file" id="fileInput" accept=".pdf,.txt">
+      <p id="uploadStatus"></p>
+    </section>
+
+    <!-- QA -->
+    <section id="qa" class="view">
+      <textarea id="questionInput" placeholder="Ask about the document..."></textarea>
+      <button id="askBtn">Ask AI</button>
+      <div id="answerOutput" class="card"></div>
+      <button id="copyAnswer">Copy</button>
+    </section>
+
+    <!-- LETTER -->
+    <section id="letter" class="view">
+      <input id="senderName" placeholder="Sender Name">
+      <input id="recipientName" placeholder="Recipient Name">
+      <input id="subject" placeholder="Subject">
+      <textarea id="facts" placeholder="Facts"></textarea>
+      <textarea id="grounds" placeholder="Legal Grounds"></textarea>
+      <textarea id="action" placeholder="Demanded Action"></textarea>
+
+      <button id="generateLetter">Generate Letter</button>
+      <div id="letterOutput" class="card"></div>
+
+      <button id="copyLetter">Copy</button>
+      <button id="downloadPDF">Download PDF</button>
+    </section>
+
+  </div>
+</div>
+
+<footer class="footer">
+This document is AI-generated. Not legal advice.
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
